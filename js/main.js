@@ -1,8 +1,6 @@
 
-
 // global variables initialized in resetGame();
 var x; // = true;
-
 
 var ref = new Firebase('https://arnoldtictac.firebaseio.com/');
 var playersRef = ref.child('players');
@@ -13,8 +11,6 @@ var newMove;  // = newMoveX; // will hold key for this player
 var count = 0;
 
 var g_start; // = false;
-
-
 
 $(document).ready(init);
 
@@ -32,14 +28,10 @@ connectedRef.on("value", function(isOnline) {
 
 function init(){
 
-
     restartGame();
     $('#newGame').on('click',restartGame);
     $('.box').on('click', turnHandler)
     $('#submit').on('click',enterName)
-
-
-
 }
 
 function checkRemove(error)
@@ -68,7 +60,6 @@ function restartGame(event)
 
 function enterName(){
 
-
     console.log($('#username').val());
     playersRef.once('value',function(snapshot){
         console.log(snapshot.val());
@@ -84,7 +75,6 @@ function enterName(){
             g_start = true;
             x = true;
         }
-
 
         else if(Object.keys(snapshot.val()).length===1){
             playersRef.push($('#username').val());
@@ -104,7 +94,6 @@ function enterName(){
     });
 
 }
-
 function clearBoard()
 {
     var box;
@@ -118,17 +107,14 @@ function clearBoard()
     $('.turn').text("");
 
 }
-
 function handleRemoteTurn(snapshot)
 {
 
     var boxNumber = snapshot.val();
     if (!g_start || boxNumber == null || boxNumber === '' )
     {
-
         return;
     }
-
     var box = $('#square'+boxNumber);
     if (x===true){
         if(box.text() !== 'O' && box.text() === ''){
@@ -171,29 +157,29 @@ function turnHandler(event){
 
     // did player click when not its turn
     if ((g_token === 'X' && !x) ||(g_token === 'O' && x))
-       return;
+     return;
 
-    var boxNumber = (event.target.id.slice(-1));
-    newMove.set(boxNumber);
-    if (x===true){
-        if($(this).text() !== 'O' && $(this).text() === ''){
-            $(this).text('X');
-            if (g_token === 'X')
-                $('.turn').text("O's turn ... wait for other player to move.");
-            x = false;
-        }
+ var boxNumber = (event.target.id.slice(-1));
+ newMove.set(boxNumber);
+ if (x===true){
+    if($(this).text() !== 'O' && $(this).text() === ''){
+        $(this).text('X');
+        if (g_token === 'X')
+            $('.turn').text("O's turn ... wait for other player to move.");
+        x = false;
     }
+}
 
-    else{
-        if($(this).text()!=='X' && $(this).text() === ''){
-            $(this).text('O')
+else{
+    if($(this).text()!=='X' && $(this).text() === ''){
+        $(this).text('O')
 
-            if (g_token === 'O')
-                $('.turn').text("X's turn ... wait for other player to move.");
-            x = true;
-        }
+        if (g_token === 'O')
+            $('.turn').text("X's turn ... wait for other player to move.");
+        x = true;
     }
-    winner();
+}
+winner();
 }
 
 function winner()
@@ -236,7 +222,6 @@ function squareMatrix() {
 
     return squares;   // squares is a 3x3 matrix, an array of arrays
 }
-
 function rowWin(squares)
 {
 
@@ -253,7 +238,6 @@ function rowWin(squares)
     return 0;
 }
 
-
 function fullTie(squares)
 {
     for (i = 0; i < 3; ++i) {
@@ -262,7 +246,6 @@ function fullTie(squares)
           if (squares[i][j] == 0)
             return false;
     }
-
 
     return true;
 }
