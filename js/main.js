@@ -9,6 +9,7 @@ var newMoveX = ref.child('newMoveX');  // which box the new move
 var newMoveO = ref.child('newMoveO');  // what key to wait on
 var newMove;  // = newMoveX; // will hold key for this player
 var count = 0;
+var cnt = 0;
 
 var g_start; // = false;
 
@@ -184,6 +185,7 @@ winner();
 
 function winner()
 {
+    cnt++;
     squares = squareMatrix();
 
     if (rowWin(squares) === 3 ||colWin(squares) === 3 ||diagWin(squares) === 3)
@@ -200,6 +202,9 @@ function winner()
     {
         if (g_start) alert("Tie game!!!");
         g_start = false;
+    }
+    else if (cnt>=9){
+        alert("Its a Tie");
     }
 };
 
